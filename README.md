@@ -97,7 +97,11 @@ id SERIAL primary key,
 constraint fk_структурное_подразделение foreign key(Структурное_подразделение_id) references Подразделение(id)
 )
 ```
+**Скрин 1-2**  
 
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.1png.png)  
+
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.2png.png)  
  
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
@@ -114,7 +118,12 @@ constraint fk_структурное_подразделение foreign key(Ст
 ```
 select  Фамилия, Имя, Отчество, Оклад, Адрес_филиала, Дата_найма FROM Сотрудники, Оклад, Адрес ;
 ```
- 
 
+**Скрин 1-2**
 
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img2.1png.png)   
+
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img2.2png.png)  
+
+**Правда табличку надо доработать. Возможно дублировние записей.**   
 **
