@@ -97,8 +97,10 @@ id SERIAL primary key,
 constraint fk_структурное_подразделение foreign key(Структурное_подразделение_id) references Подразделение(id)
 )
 ```
-**Скрин 1-2**  
+**Скрин 1-3**  
 
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.3png.png) 
+ 
 ![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.1png.png)  
 
 ![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.2png.png)  
