@@ -119,9 +119,7 @@ constraint fk_структурное_подразделение foreign key(Ст
 select  Фамилия, Имя, Отчество, Оклад, Адрес_филиала, Дата_найма FROM Сотрудники, Оклад, Адрес ;
 ```
 
-**Скрин 1-2**
-
-![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img2.1png.png)   
+**Скрин 1**
 
 ![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img2.2png.png)  
 
