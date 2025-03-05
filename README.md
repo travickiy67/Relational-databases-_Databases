@@ -39,6 +39,64 @@
 - ...
 - идентификатор структурного подразделения, внешний ключ, integer).
 
+**Пересмотреев еще раз лекцию и в результате долгих поисков в интернете своял такой код. Дату приема на работу в отдельную таблицу не выводил. Код рабочий. Таблица получилась.**  
+
+```
+create table Сотрудники(
+id SERIAL primary key,
+Фамилия varchar(50) not null,
+Имя varchar(50) not null,
+Отчество varchar(50) not null,
+Оклад_id int not null,
+constraint fk_оклад foreign key(Оклад_id) references Оклад(id),
+Должность_id int not null,
+constraint fk_должность foreign key(Должность_id) references Должность(id),
+Тип_подразделения_id int not null,
+constraint fk_тип_подразделения foreign key(Тип_подразделения_id) references Тип_подразделения(id),
+Структурное_подразделение_id int not null,
+constraint fk_подразделения foreign key(Структурное_подразделение_id) references Подразделение(id),
+Дата_найма date not null,
+Адрес_филиала_id int not null,
+constraint fk_адрес_филиала foreign key(Адрес_филиала_id) references Адрес(id),
+Проект_на_который_назначен_id int not null,
+constraint fk_project foreign key(Проект_на_который_назначен_id) references Проект(id)
+)
+
+create table Оклад(
+id SERIAL primary key,
+Оклад money not null
+)
+
+create table Должность (
+id SERIAL primary key,
+Должность varchar(100) not null,
+Оклад_id INTEGER not null,
+constraint fk_оклад foreign key(Оклад_id) references Оклад(id)
+)
+
+create table Проект (
+id SERIAL primary key, 
+Проект_на_который_назначен VARCHAR(100) not null 
+)
+
+create table Подразделение (
+id SERIAL primary key,
+Структурное_подразделение VARCHAR(200) not null 
+)
+
+create table Тип_подразделения (
+id SERIAL primary key,
+Тип_подразделения VARCHAR(100) not null
+)
+
+
+create table Адрес(
+id SERIAL primary key,
+Адрес_филиала varchar(100) not null,
+Структурное_подразделение_id int not null,
+constraint fk_структурное_подразделение foreign key(Структурное_подразделение_id) references Подразделение(id)
+)
+``` 
 ## Дополнительные задания (со звёздочкой*)
 Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
 
