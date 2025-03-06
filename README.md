@@ -132,7 +132,7 @@ insert into salary (salary)
 
 ![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.1png.png) 
  
-![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.3png.png)  
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.2png.png)  
 
 ```
 select  last_name, first_name, surname, salary, job_title, unit_type, structural_division, date_of_hiring, branch_address, assigned_to_project FROM employees, subdivision, unit_type, address, project, job_title, salary, date;
