@@ -19,7 +19,7 @@
 ---
 ### Легенда
 
-Заказчик передал вам ![файл в формате Excel](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/files/hw-12-1.xlsx), в котором сформирован отчёт. 
+Заказчик передал вам [файл в формате Excel](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/files/hw-12-1.xlsx), в котором сформирован отчёт. 
 
 На основе этого отчёта нужно выполнить следующие задания.
 
@@ -28,7 +28,12 @@
 Опишите не менее семи таблиц, из которых состоит база данных:
 
 - какие данные хранятся в этих таблицах;
+
+**Фамиля, имя, отчество, должность, оклад, тип подразделения, структурное подразделение, адрес, датаа найма, проект которым занимается сотрудник**
+
 - какой тип данных у столбцов в этих таблицах, если данные хранятся в PostgreSQL.
+
+**serial, character varying(varchar), money, date**  
 
 Приведите решение к следующему виду:
 
@@ -39,91 +44,100 @@
 - ...
 - идентификатор структурного подразделения, внешний ключ, integer).
 
-**Пересмотреев еще раз лекцию и  поискв в интернете, своял такой код. Дату приема на работу в отдельную таблицу не выводил. Код рабочий. Таблица получилась. Первая табличка в этом коде создается последней. Она ссылается на все таблицы**  
+**Код для создания таблиц** 
 
 ```
-create table Сотрудники(
+create table salary(
 id SERIAL primary key,
-Фамилия varchar(50) not null,
-Имя varchar(50) not null,
-Отчество varchar(50) not null,
-Оклад_id int not null,
-constraint fk_оклад foreign key(Оклад_id) references Оклад(id),
-Должность_id int not null,
-constraint fk_должность foreign key(Должность_id) references Должность(id),
-Тип_подразделения_id int not null,
-constraint fk_тип_подразделения foreign key(Тип_подразделения_id) references Тип_подразделения(id),
-Структурное_подразделение_id int not null,
-constraint fk_подразделения foreign key(Структурное_подразделение_id) references Подразделение(id),
-Дата_найма date not null,
-Адрес_филиала_id int not null,
-constraint fk_адрес_филиала foreign key(Адрес_филиала_id) references Адрес(id),
-Проект_на_который_назначен_id int not null,
-constraint fk_project foreign key(Проект_на_который_назначен_id) references Проект(id)
-)
+salary money not null
+);
 
-create table Оклад(
+create table job_title(
 id SERIAL primary key,
-Оклад money not null
-)
+job_title varchar(100) not null,
+salary_id INTEGER not null,
+constraint fk_salary foreign key (salary_id) references salary(id)
+);
 
-create table Должность (
-id SERIAL primary key,
-Должность varchar(100) not null,
-Оклад_id INTEGER not null,
-constraint fk_оклад foreign key(Оклад_id) references Оклад(id)
-)
-
-create table Проект (
+create table project (
 id SERIAL primary key, 
-Проект_на_который_назначен VARCHAR(100) not null 
-)
+assigned_to_project VARCHAR (100) not null 
+);
 
-create table Подразделение (
+create table address(
 id SERIAL primary key,
-Структурное_подразделение VARCHAR(200) not null 
-)
+branch_address varchar(100) not null
+);
 
-create table Тип_подразделения (
+create table unit_type(
 id SERIAL primary key,
-Тип_подразделения VARCHAR(100) not null
-)
+unit_type VARCHAR(100) not null
+);
 
-
-create table Адрес(
+create table subdivision (
 id SERIAL primary key,
-Адрес_филиала varchar(100) not null,
-Структурное_подразделение_id int not null,
-constraint fk_структурное_подразделение foreign key(Структурное_подразделение_id) references Подразделение(id)
-)
+structural_division VARCHAR(200) not null, 
+unit_type_id int not null,
+constraint fk_unit_type foreign key (unit_type_id) references unit_type(id)
+);
+
+create table date(
+id SERIAL primary key,
+date_of_hiring date not null
+);
+
+create table employees(
+id SERIAL primary key,
+last_name varchar(50) not null,
+first_name varchar(50) not null,
+surname varchar(50) not null,
+job_title_id int not null, 
+constraint fk_job_title foreign key (job_title_id) references job_title(id),
+structural_division_id int not null,
+constraint fk_subdivision foreign key (structural_division_id) references subdivision(id),
+date_of_hiring_id int not null,
+constraint fk_date_of_hiring foreign key (date_of_hiring_id) references date(id),
+branch_address_id int not null,
+constraint fk_branch_address foreign key (branch_address_id) references address(id),
+assigned_to_project_id int not null,
+constraint fk_project foreign key (assigned_to_project_id) references project(id)
+);
+
+insert into date (date_of_hiring)  
+ values ('02.01.2023') returning id;
+
+insert into salary (salary)
+ values (100000) returning id;
+
+ insert into job_title (job_title, salary_id)
+ values ('Специалист', 1) returning id;
+ 
+ insert into project (assigned_to_project)
+ values ('NO') returning id;
+ 
+ insert into address(branch_address)
+ values ('Москва') returning id;
+ 
+ insert into unit_type(unit_type)
+ values ('Отдел') returning id;
+ 
+ insert into subdivision (structural_division, unit_type_id)
+ values ('it_отдел', 1) returning id;
+
+ insert into employees (last_name, first_name, surname, job_title_id, structural_division_id, date_of_hiring_id, branch_address_id, assigned_to_project_id)
+ values ('Травицкий', 'Сергей', 'Владимирович', 1, 1, 1, 1, 1);
+ 
 ```
 **Скрин 1-3**  
 
-![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.3png.png) 
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.1png.png) 
  
-![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.1png.png)  
-
-![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.2png.png)  
- 
-## Дополнительные задания (со звёздочкой*)
-Эти задания дополнительные, то есть не обязательные к выполнению, и никак не повлияют на получение вами зачёта по этому домашнему заданию. Вы можете их выполнить, если хотите глубже шире разобраться в материале.
-
-
-### Задание 2*
-
-Перечислите, какие, на ваш взгляд, в этой денормализованной таблице встречаются функциональные зависимости и какие правила вывода нужно применить, чтобы нормализовать данные.
-
-**Ни когда не занимался базами данных. Но точно первая таблица должна иметь внешние ключи на остальные таблички, оклад может ссылаться на должность, филиал поидее на адрес. Но могу ошибаться.**  
-
-*Простой запрос на получение данных из таблицы*
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.3png.png)  
 
 ```
-select  Фамилия, Имя, Отчество, Оклад, Адрес_филиала, Дата_найма FROM Сотрудники, Оклад, Адрес ;
+select  last_name, first_name, surname, salary, job_title, unit_type, structural_division, date_of_hiring, branch_address, assigned_to_project FROM employees, subdivision, unit_type, address, project, job_title, salary, date;
 ```
 
-**Скрин 1**
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.3png.png)  
+ 
 
-![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img2.2png.png)  
-
-**Правда табличку надо доработать. Возможно дублировние записей.**   
-**
