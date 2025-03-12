@@ -104,7 +104,7 @@ constraint fk_project foreign key (assigned_to_project_id) references project(id
 );
 
 insert into date (date_of_hiring)  
- values ('02.01.2023') returning id;
+ values ('05.01.2022') returning id;
 
 insert into salary (salary)
  values (100000) returning id;
@@ -122,7 +122,7 @@ insert into salary (salary)
  values ('Отдел') returning id;
  
  insert into subdivision (structural_division, unit_type_id)
- values ('it_отдел', 1) returning id;
+ values ('IT', 1) returning id;
 
  insert into employees (last_name, first_name, surname, job_title_id, structural_division_id, date_of_hiring_id, branch_address_id, assigned_to_project_id)
  values ('Травицкий', 'Сергей', 'Владимирович', 1, 1, 1, 1, 1);
@@ -135,9 +135,18 @@ insert into salary (salary)
 ![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.2png.png)  
 
 ```
-select  last_name, first_name, surname, salary, job_title, unit_type, structural_division, date_of_hiring, branch_address, assigned_to_project FROM employees, subdivision, unit_type, address, project, job_title, salary, date;
+SELECT CONCAT  (e.last_name, '  ', e.first_name, '  ', e.surname) AS "Ф И О", jt.job_title, s.salary, 
+ss.structural_division, ut.unit_type, a.branch_address, d.date_of_hiring, p.assigned_to_project
+FROM employees e
+join job_title jt on e.id = jt.id
+join salary s on s.id = jt.id
+join subdivision ss on e.id = ss.id
+join unit_type ut on ut.id = ss.id
+join address a on a.id = e.id
+join date d on d.id = e.id
+join project p on p.id = e.id;
 ```
 
-![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img1.3png.png)  
+![img](https://github.com/travickiy67/Relational-databases-_Databases/blob/main/img/img2.1png.png)  
  
 
